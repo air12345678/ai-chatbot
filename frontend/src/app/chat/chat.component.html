@@ -1,0 +1,74 @@
+<div class="chat-container">
+  <div class="chat-header">
+    <div class="header-content">
+      <h2>🤖 AdventureWorks AI Assistant</h2>
+      <div class="connection-status">
+        <span class="status-indicator connected"></span>
+        <span class="status-text">Connected</span>
+      </div>
+    </div>
+  </div>
+  
+  <div class="chat-messages" id="chatMessages">
+    <div *ngFor="let msg of messages" [class]="'message ' + (msg.sender === 'User' ? 'user-message' : 'bot-message')">
+      <div class="message-header">
+        <div class="sender-info">
+          <span class="sender-avatar">{{msg.sender === 'User' ? '👤' : '🤖'}}</span>
+          <strong>{{msg.sender}}</strong>
+        </div>
+        <span class="timestamp">{{msg.timestamp | date:'short'}}</span>
+      </div>
+      <div class="message-content">
+        <div *ngIf="msg.sender === 'Bot'" [innerHTML]="formatBotMessage(msg.text)"></div>
+        <div *ngIf="msg.sender === 'User'">{{msg.text}}</div>
+      </div>
+    </div>
+    
+    <!-- Bot typing indicator -->
+    <div *ngIf="isBotTyping" class="message bot-message typing-message">
+      <div class="message-header">
+        <div class="sender-info">
+          <span class="sender-avatar">🤖</span>
+          <strong>Bot</strong>
+        </div>
+        <span class="typing-status">typing...</span>
+      </div>
+      <div class="message-content">
+        <div class="typing-indicator">
+          <div class="typing-dots">
+            <span class="dot"></span>
+            <span class="dot"></span>
+            <span class="dot"></span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <div class="chat-input">
+    <div class="input-container">
+      <input 
+        type="text" 
+        [(ngModel)]="userMessage" 
+        placeholder="Ask about employees, products, sales, customers..." 
+        (keyup.enter)="sendMessage()"
+        (input)="onUserTyping()"
+        [disabled]="isBotTyping"
+        class="message-input"
+      />
+      <button 
+        (click)="sendMessage()" 
+        [disabled]="!userMessage.trim() || isBotTyping"
+        class="send-button"
+      >
+        <span *ngIf="!isBotTyping">Send</span>
+        <span *ngIf="isBotTyping">Processing...</span>
+      </button>
+    </div>
+    <div class="input-hints" *ngIf="!userMessage && !isBotTyping">
+      <span class="hint-item" (click)="userMessage = 'Show me all employees'">👥 Show employees</span>
+      <span class="hint-item" (click)="userMessage = 'What are the top selling products?'">📈 Top products</span>
+      <span class="hint-item" (click)="userMessage = 'How many customers do we have?'">👨‍💼 Customer count</span>
+    </div>
+  </div>
+</div>
