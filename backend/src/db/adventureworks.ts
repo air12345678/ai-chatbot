@@ -4,10 +4,10 @@ import { config } from 'dotenv';
 config();
 
 const sqlConfig = {
-    server: 'IN-7X2XDK3',
-    database: 'AdventureWorks2022',
-    user: process.env.DB_USER || 'sa',
-    password: process.env.DB_PASSWORD || 'Password@1234',
+    server: process.env.DB_SERVER || '',
+    database: process.env.DB_NAME || '',
+    user: process.env.DB_USER || '',
+    password: process.env.DB_PASSWORD || '',
     options: {
         encrypt: true,
         trustServerCertificate: true,

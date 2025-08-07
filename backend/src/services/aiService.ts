@@ -18,7 +18,7 @@ interface DatabaseContext {
 }
 
 const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY || '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'
+  apiKey: process.env.OPENAI_API_KEY || ''
 });
 
 // Cache for database schema to avoid repeated calls
