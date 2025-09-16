@@ -1,7 +1,7 @@
 <div class="chat-container">
   <div class="chat-header">
     <div class="header-content">
-      <h2>🤖 AdventureWorks AI Assistant</h2>
+      <h2>🤖 Database AI Assistant</h2>
       <div class="connection-status">
         <span class="status-indicator connected"></span>
         <span class="status-text">Connected</span>
@@ -10,17 +10,48 @@
   </div>
   
   <div class="chat-messages" id="chatMessages">
-    <div *ngFor="let msg of messages" [class]="'message ' + (msg.sender === 'User' ? 'user-message' : 'bot-message')">
+    <div *ngFor="let msg of messages; let i = index" [class]="'message ' + (msg.sender === 'User' ? 'user-message' : 'bot-message')">
       <div class="message-header">
         <div class="sender-info">
           <span class="sender-avatar">{{msg.sender === 'User' ? '👤' : '🤖'}}</span>
           <strong>{{msg.sender}}</strong>
         </div>
-        <span class="timestamp">{{msg.timestamp | date:'short'}}</span>
+        <div class="message-header-actions">
+          <button 
+            mat-button 
+            class="copy-button"
+            [class.copied]="msg.isCopied"
+            (click)="copyMessage(msg, i)"
+            [matTooltip]="getCopyTooltip(i)"
+            matTooltipPosition="left">
+            {{getCopyButtonText(i)}}
+          </button>
+          <span class="timestamp">{{msg.timestamp | date:'short'}}</span>
+        </div>
       </div>
       <div class="message-content">
-        <div *ngIf="msg.sender === 'Bot'" [innerHTML]="formatBotMessage(msg.text)"></div>
-        <div *ngIf="msg.sender === 'User'">{{msg.text}}</div>
+        <div *ngIf="msg.sender === 'Bot'" [innerHTML]="formatBotMessage(msg.text)" class="bot-content"></div>
+        <div *ngIf="msg.sender === 'User'" class="user-content">{{msg.text}}</div>
+        
+        <!-- Action buttons container -->
+        <div class="message-actions" *ngIf="msg.sender === 'Bot'">
+          <!-- Export button for exportable bot messages -->
+          <!-- Debug info for export button -->
+          <div *ngIf="msg.sender === 'Bot'" style="display: none;">
+            Records: {{msg.recordCount}}, Exportable: {{msg.isExportable}}
+          </div>
+          
+          <button 
+            *ngIf="msg.isExportable && msg.recordCount > 0"
+            mat-raised-button 
+            color="primary" 
+            class="export-button"
+            (click)="openExportDialog(msg)"
+            matTooltip="Export {{msg.recordCount}} records to Excel/CSV">
+            <mat-icon>download</mat-icon>
+            Export Data ({{msg.recordCount | number}} records)
+          </button>
+        </div>
       </div>
     </div>
     

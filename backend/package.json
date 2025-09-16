@@ -1,21 +1,26 @@
 {
-  "name": "ai-chatbot-adventureworks",
+  "name": "ai-chatbot-database-analyzer",
   "version": "1.0.0",
-  "description": "A real-time AI chatbot that analyzes the Adventure Works database.",
+  "description": "A real-time AI chatbot that analyzes any SQL database.",
   "main": "src/app.ts",
   "scripts": {
     "start": "ts-node src/app.ts",
     "build": "tsc",
-    "test": "jest"
+    "test": "jest",
+    "benchmark": "ts-node src/benchmark/runBenchmark.ts"
   },
   "dependencies": {
+    "@types/uuid": "^10.0.0",
     "body-parser": "^1.20.3",
     "cors": "^2.8.5",
+    "csv-writer": "^1.6.0",
     "dotenv": "^10.0.0",
+    "exceljs": "^4.4.0",
     "express": "^4.21.2",
     "mssql": "^7.3.5",
     "openai": "^5.10.2",
-    "socket.io": "^4.8.1"
+    "socket.io": "^4.8.1",
+    "uuid": "^11.1.0"
   },
   "devDependencies": {
     "@types/express": "^4.17.13",

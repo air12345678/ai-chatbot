@@ -111,6 +111,107 @@
   border-bottom: 1px solid rgba(0,0,0,0.1);
 }
 
+.message-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.copy-button {
+  opacity: 0.8;
+  transition: all 0.3s ease;
+  color: #666;
+  min-width: auto;
+  height: 28px;
+  padding: 4px 8px;
+  font-size: 12px;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 6px;
+  border: 1px solid rgba(0,0,0,0.1);
+  background: rgba(255,255,255,0.7);
+}
+
+.copy-button:hover {
+  opacity: 1;
+  background-color: rgba(25, 118, 210, 0.08);
+  color: #1976d2;
+  transform: scale(1.02);
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.copy-button mat-icon,
+.copy-button .copy-icon {
+  font-size: 18px;
+  width: 18px;
+  height: 18px;
+  transition: transform 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.copy-button .material-icon,
+.copy-button .fallback-icon {
+  font-size: 18px;
+  width: 18px;
+  height: 18px;
+  transition: transform 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.copy-button .fallback-icon {
+  font-size: 16px;
+  line-height: 1;
+}
+
+/* Hide fallback icon when Material Icons are available */
+.copy-button .material-icon:not(:empty) + .fallback-icon {
+  display: none;
+}
+
+/* Message hover effects */
+.message:hover .copy-button {
+  opacity: 1;
+}
+
+/* Success state for copy button */
+.copy-button.copied {
+  color: #4caf50 !important;
+  opacity: 1 !important;
+  background-color: rgba(76, 175, 80, 0.1) !important;
+  border-color: #4caf50 !important;
+  box-shadow: 0 2px 4px rgba(76, 175, 80, 0.2) !important;
+}
+
+.copy-button.copied mat-icon,
+.copy-button.copied .copy-icon {
+  animation: copySuccess 0.5s ease;
+}
+
+@keyframes copySuccess {
+  0% { 
+    transform: scale(1); 
+    opacity: 1;
+  }
+  25% { 
+    transform: scale(1.3); 
+    opacity: 0.8;
+  }
+  50% { 
+    transform: scale(1.1); 
+    opacity: 1;
+  }
+  100% { 
+    transform: scale(1); 
+    opacity: 1;
+  }
+}
+
 .sender-info {
   display: flex;
   align-items: center;
@@ -138,8 +239,124 @@
 }
 
 .message-content {
+  padding: 8px 16px;
+  width: 100%;
+}
+
+/* Message content container */
+.message-content {
   padding: 16px;
-  line-height: 1.5;
+  width: 100%;
+  overflow: visible;
+}
+
+/* Table container structure */
+.message-table-container {
+  margin: 16px -16px;
+  background: #fff;
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  border-radius: 4px;
+}
+
+.table-wrapper {
+  width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+  -webkit-overflow-scrolling: touch;
+  position: relative;
+}
+
+/* Table base styles */
+.data-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  min-width: 650px;
+}
+
+/* Header styles */
+.data-table thead {
+  background: #f5f5f5;
+}
+
+.data-table th {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  background: #f5f5f5;
+  font-weight: 600;
+  color: #333;
+  text-align: left;
+  padding: 16px;
+  border-bottom: 2px solid rgba(0, 0, 0, 0.1);
+  white-space: nowrap;
+}
+
+/* Cell styles */
+.data-table td {
+  padding: 12px 16px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+  color: #333;
+}
+
+/* Row hover effect */
+.data-table tbody tr:hover {
+  background-color: rgba(0, 0, 0, 0.02);
+}
+
+/* Last row styling */
+.data-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+/* Custom scrollbar styling */
+.table-wrapper::-webkit-scrollbar {
+  height: 6px;
+  background-color: #f5f5f5;
+}
+
+.table-wrapper::-webkit-scrollbar-thumb {
+  background-color: #888;
+  border-radius: 3px;
+}
+
+.table-wrapper::-webkit-scrollbar-thumb:hover {
+  background-color: #666;
+}
+
+/* Mobile optimizations */
+@media screen and (max-width: 768px) {
+  .message-table-container {
+    margin: 12px -12px;
+  }
+
+  .data-table th,
+  .data-table td {
+    padding: 12px;
+    font-size: 14px;
+  }
+
+  .data-table {
+    min-width: 500px;
+  }
+}
+
+/* Ensure consistent spacing */
+.message-content > *:first-child {
+  margin-top: 0;
+}
+
+.message-content > *:last-child {
+  margin-bottom: 0;
+}
+
+/* Table cell text handling */
+.data-table td, 
+.data-table th {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 300px;
 }
 
 /* Typing indicator animation */
@@ -201,6 +418,21 @@
   box-shadow: inset 0 1px 3px rgba(0,0,0,0.2);
 }
 
+.sql-block {
+  background: #1e293b;
+  color: #cbd5e1;
+  padding: 16px;
+  border-radius: 8px;
+  margin: 12px 0;
+  overflow-x: auto;
+  font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+  font-size: 0.9rem;
+  line-height: 1.4;
+  white-space: pre;
+  box-shadow: inset 0 1px 3px rgba(0,0,0,0.2);
+  border-left: 4px solid #3b82f6;
+}
+
 .inline-code {
   background: #e8f4fd;
   color: #1976d2;
@@ -209,6 +441,68 @@
   font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
   font-size: 0.9rem;
   border: 1px solid #bbdefb;
+}
+
+/* Data table styles */
+.data-table-container {
+  margin: 12px 0;
+  overflow-x: auto;
+  border-radius: 8px;
+  border: 1px solid #e0e0e0;
+  background: #fff;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #fff;
+  font-size: 0.9rem;
+  min-width: 600px;
+}
+
+.data-table thead {
+  background: linear-gradient(135deg, #f5f5f5, #e8e8e8);
+}
+
+.data-table th {
+  padding: 12px 16px;
+  text-align: left;
+  font-weight: 600;
+  color: #333;
+  border: 1px solid #ddd;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.data-table th:last-child {
+  border-right: none;
+}
+
+.data-table td {
+  padding: 10px 16px;
+  border: 1px solid #ddd;
+  vertical-align: top;
+  word-wrap: break-word;
+  max-width: 200px;
+}
+
+.data-table td:last-child {
+  border-right: none;
+}
+
+.data-table tbody tr:hover {
+  background-color: #f0f8ff;
+  transition: background-color 0.2s ease;
+}
+
+.data-table tbody tr:nth-child(even) {
+  background-color: #fbfbfb;
+}
+
+.data-table tbody tr:nth-child(even):hover {
+  background-color: #f0f0f0;
 }
 
 .error-icon {
@@ -328,6 +622,71 @@
   background: linear-gradient(to bottom, #a8a8a8, #888);
 }
 
+/* Message actions and export button */
+.message-actions {
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1px solid rgba(0,0,0,0.1);
+  display: flex;
+  gap: 8px;
+}
+
+.export-button {
+  display: inline-flex !important;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px !important;
+  border-radius: 8px !important;
+  font-size: 0.9rem !important;
+  font-weight: 500 !important;
+  background: linear-gradient(135deg, #1976d2, #1565c0) !important;
+  color: white !important;
+  box-shadow: 0 2px 4px rgba(25, 118, 210, 0.2) !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+
+.export-button:hover {
+  background: linear-gradient(135deg, #1565c0, #0d47a1) !important;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(25, 118, 210, 0.3) !important;
+}
+
+.export-button mat-icon {
+  margin-right: 4px;
+  font-size: 18px;
+  width: 18px;
+  height: 18px;
+}
+
+/* Tooltip improvements */
+.mat-mdc-tooltip {
+  font-size: 12px;
+}
+
+/* Copy button responsive behavior */
+@media (max-width: 768px) {
+  .copy-button {
+    opacity: 1; /* Always visible on mobile */
+  }
+  
+  .message-header-actions {
+    gap: 4px;
+  }
+  
+  .copy-button {
+    width: 28px;
+    height: 28px;
+  }
+  
+  .copy-button mat-icon,
+  .copy-button .copy-icon {
+    font-size: 16px;
+    width: 16px;
+    height: 16px;
+  }
+}
+
 /* Responsive design */
 @media (max-width: 768px) {
   .chat-container {
@@ -352,4 +711,137 @@
   .hint-item {
     text-align: center;
   }
+  
+  .export-button {
+    font-size: 0.8rem;
+    padding: 6px 12px;
+  }
+  
+  /* Mobile table styles */
+  .data-table-container {
+    font-size: 0.75rem;
+  }
+  
+  .data-table th,
+  .data-table td {
+    padding: 6px 4px;
+    max-width: 120px;
+  }
+  
+  .data-table {
+    font-size: 0.75rem;
+  }
+}
+
+/* Table container and scrolling */
+.table-wrapper {
+  position: relative;
+  margin: 1rem -16px;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.message-content {
+  position: relative;
+  padding: 16px;
+  overflow: hidden; /* Contains the table wrapper */
+}
+
+/* Table styles */
+.table-wrapper table {
+  width: 100%;
+  min-width: 600px; /* Ensures table doesn't get too narrow */
+  border-collapse: separate;
+  border-spacing: 0;
+  margin: 0;
+  background: #fff;
+}
+
+/* Header styles */
+.table-wrapper table thead th {
+  position: sticky;
+  top: 0;
+  background: #f5f5f5;
+  font-weight: 600;
+  text-align: left;
+  padding: 12px 16px;
+  border-bottom: 2px solid rgba(0, 0, 0, 0.1);
+  white-space: nowrap;
+  z-index: 1;
+}
+
+/* Cell styles */
+.table-wrapper table td {
+  padding: 12px 16px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  max-width: 200px; /* Prevents cells from becoming too wide */
+  overflow: hidden;
+}
+
+/* Row hover effect */
+.table-wrapper table tbody tr:hover {
+  background-color: rgba(0, 0, 0, 0.02);
+}
+
+/* Last row bottom border */
+.table-wrapper table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+/* Custom scrollbar */
+.table-wrapper::-webkit-scrollbar {
+  height: 8px;
+  background-color: #f5f5f5;
+}
+
+.table-wrapper::-webkit-scrollbar-thumb {
+  background-color: #888;
+  border-radius: 4px;
+}
+
+.table-wrapper::-webkit-scrollbar-thumb:hover {
+  background-color: #666;
+}
+
+/* Mobile responsiveness */
+@media screen and (max-width: 768px) {
+  .table-wrapper {
+    margin: 1rem -12px;
+  }
+  
+  .table-wrapper table td,
+  .table-wrapper table th {
+    padding: 10px 12px;
+    font-size: 14px;
+  }
+}
+
+/* Bot message content specific styles */
+.bot-content {
+  width: 100%;
+  overflow-x: visible; /* Allows table to scroll horizontally */
+  overflow-y: hidden; /* Prevents vertical scrolling interference */
+}
+
+/* Message container adjustments */
+.message {
+  max-width: 100%;
+  overflow: hidden;
+}
+
+/* Table cell text wrapping options */
+.table-wrapper table td.wrap-text {
+  white-space: normal;
+  max-width: none;
+}
+
+/* Table header text wrapping options */
+.table-wrapper table th.wrap-text {
+  white-space: normal;
+  max-width: none;
 }

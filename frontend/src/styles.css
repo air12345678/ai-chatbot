@@ -1,1 +1,116 @@
 /* You can add global styles to this file, and also import other style files */
+
+/* Import Google Fonts - Material Icons */
+@import url('https://fonts.googleapis.com/icon?family=Material+Icons');
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap');
+
+/* Import Angular Material theme */
+@import '@angular/material/prebuilt-themes/indigo-pink.css';
+
+/* Global Material Dialog styles */
+.export-dialog-panel .mat-mdc-dialog-container {
+  padding: 0;
+  overflow: visible;
+  max-height: 90vh;
+}
+
+.export-dialog-panel .mat-mdc-dialog-surface {
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+  padding: 24px;
+  min-width: 600px;
+  max-width: 800px;
+  width: 100%;
+}
+
+/* Ensure dialog backdrop is visible */
+.cdk-overlay-dark-backdrop {
+  background: rgba(0, 0, 0, 0.32);
+}
+
+/* Dialog animations */
+.export-dialog-panel .mat-mdc-dialog-container {
+  animation: dialogSlideIn 0.3s ease-out;
+}
+
+@keyframes dialogSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-50px) scale(0.8);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* Ensure Material icons load properly */
+.material-icons {
+  font-family: 'Material Icons';
+  font-weight: normal;
+  font-style: normal;
+  font-size: 24px;
+  line-height: 1;
+  letter-spacing: normal;
+  text-transform: none;
+  display: inline-block;
+  white-space: nowrap;
+  word-wrap: normal;
+  direction: ltr;
+  -webkit-font-feature-settings: 'liga';
+  font-feature-settings: 'liga';
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Fix for Angular Material icons */
+mat-icon {
+  font-family: 'Material Icons' !important;
+  font-weight: normal;
+  font-style: normal;
+  font-size: 24px;
+  line-height: 1;
+  letter-spacing: normal;
+  text-transform: none;
+  display: inline-block;
+  white-space: nowrap;
+  word-wrap: normal;
+  direction: ltr;
+  -webkit-font-feature-settings: 'liga';
+  font-feature-settings: 'liga';
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Global body font */
+body {
+  font-family: 'Roboto', sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+/* Global button styles */
+.mat-mdc-raised-button:not(:disabled) {
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.mat-mdc-raised-button:hover:not(:disabled) {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+/* Responsive dialog */
+@media (max-width: 768px) {
+  .export-dialog-panel .mat-mdc-dialog-container {
+    margin: 16px;
+    max-height: calc(100vh - 32px);
+  }
+  
+  .export-dialog-panel .mat-mdc-dialog-surface {
+    min-width: 300px;
+    max-width: calc(100vw - 32px);
+    padding: 16px;
+  }
+  
+  .query-display {
+    font-size: 0.8em;
+    max-height: 120px;
+  }
+}

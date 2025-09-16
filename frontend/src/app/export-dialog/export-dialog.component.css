@@ -1,0 +1,151 @@
+.export-dialog {
+  min-width: 600px;
+  max-width: 800px;
+  font-family: 'Roboto', sans-serif;
+  width: 100%;
+}
+
+:host {
+  display: block;
+}
+
+mat-dialog-content {
+  margin: 16px 0;
+  max-height: 60vh;
+  overflow-y: auto;
+}
+
+/* Ensure icons render properly */
+mat-icon {
+  font-family: 'Material Icons' !important;
+  font-size: 24px;
+  width: 24px;
+  height: 24px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Dialog title with icon */
+mat-dialog-title {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+mat-dialog-title mat-icon {
+  color: #1976d2;
+}
+
+.export-info {
+  margin-bottom: 24px;
+  padding: 16px;
+  background-color: #f5f5f5;
+  border-radius: 8px;
+  max-width: 100%;
+  overflow: hidden;
+}
+
+.export-info p {
+  margin: 8px 0;
+  word-wrap: break-word;
+}
+
+.query-display {
+  font-family: 'Courier New', monospace;
+  background-color: #fff;
+  padding: 12px;
+  border-radius: 4px;
+  border: 1px solid #ddd;
+  min-height: 60px;
+  max-height: 200px;
+  overflow-y: auto;
+  overflow-x: auto;
+  font-size: 0.85em;
+  margin-top: 8px;
+  white-space: pre-wrap;
+  word-break: break-all;
+  line-height: 1.4;
+  resize: vertical;
+}
+
+.export-options {
+  margin-bottom: 24px;
+}
+
+.full-width {
+  width: 100%;
+  margin-bottom: 16px;
+}
+
+.format-selection {
+  margin-top: 16px;
+}
+
+.format-group {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 8px;
+}
+
+.format-option {
+  margin-bottom: 8px !important;
+}
+
+.format-details {
+  margin-left: 8px;
+}
+
+.format-name {
+  font-weight: 500;
+  color: #333;
+}
+
+.format-description {
+  font-size: 0.85em;
+  color: #666;
+  margin-top: 2px;
+}
+
+.export-progress {
+  text-align: center;
+  padding: 24px;
+}
+
+.export-progress mat-spinner {
+  margin: 0 auto 16px;
+}
+
+.export-success,
+.export-error {
+  text-align: center;
+  padding: 16px;
+}
+
+.export-success mat-icon {
+  font-size: 48px;
+  width: 48px;
+  height: 48px;
+  color: #4caf50;
+  margin-bottom: 8px;
+}
+
+.export-error mat-icon {
+  font-size: 48px;
+  width: 48px;
+  height: 48px;
+  color: #f44336;
+  margin-bottom: 8px;
+}
+
+mat-dialog-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+mat-dialog-actions {
+  padding: 16px 0 0 0;
+}

@@ -2,16 +2,16 @@ import AIService from '../services/aiService';
 
 class ChatBot {
     socket: any;
-    aiService: AIService;
+    aiService: typeof AIService;
 
-    constructor(socket: any, aiService: AIService) {
+    constructor(socket: any, aiService: typeof AIService) {
         this.socket = socket;
         this.aiService = aiService;
     }
 
     startChat() {
         // Notify user that chat session has started
-        this.socket.emit('botMessage', 'Hello! I am your Adventure Works assistant. Ask me anything about the database.');
+        this.socket.emit('botMessage', 'Hello! I am your database AI assistant. Ask me anything about your data.');
     }
 
     async handleUserMessage(message: string) {
@@ -20,9 +20,10 @@ class ChatBot {
         this.respondToUser(response);
     }
 
-    respondToUser(response: string) {
+    respondToUser(response: { type: string; content: string; }) {
         // Send response back to the user via socket
-        this.socket.emit('botMessage', response);
+        // Frontend expects a string, so send the content
+        this.socket.emit('botMessage', response.content);
     }
 }
 

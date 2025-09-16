@@ -12,7 +12,16 @@ const sqlConfig = {
         encrypt: true,
         trustServerCertificate: true,
         enableArithAbort: true,
-    }    
+        useUTC: false,
+        charset: 'utf8',
+    },
+    requestTimeout: 30000,
+    connectionTimeout: 30000,
+    pool: {
+        max: 10,
+        min: 0,
+        idleTimeoutMillis: 30000
+    }
 };
 
 // Cache for table schemas to avoid repeated database calls
@@ -78,31 +87,35 @@ export const getAllTables = async (): Promise<any[]> => {
     }
 };
 
-export const getAdventureWorksData = async (query: string) => {
+export const executeDatabaseQuery = async (query: string) => {
     let pool: sql.ConnectionPool | undefined;
     try {
         console.log('Executing SQL:', query);
         pool = await sql.connect(sqlConfig);
         const result = await pool.request().query(query);
-        console.log('SQL Result:', result.recordset);
-        return result.recordset;
+        
+        // Clean and process the data to handle encoding issues
+        const cleanedData = result.recordset.map(row => {
+            const cleanedRow: any = {};
+            for (const [key, value] of Object.entries(row)) {
+                if (typeof value === 'string') {
+                    // Clean up encoding issues and special characters
+                    cleanedRow[key] = value
+                        .replace(/[\u0000-\u001F\u007F-\u009F]/g, '') // Remove control characters
+                        .replace(/\uFFFD/g, '?') // Replace replacement characters
+                        .trim();
+                } else {
+                    cleanedRow[key] = value;
+                }
+            }
+            return cleanedRow;
+        });
+        
+        console.log('SQL Result count:', cleanedData.length);
+        return cleanedData;
     } catch (error) {
         console.error('SQL Error:', error);
         throw error;
-    } finally {
-        if (pool) await pool.close();
-    }
-};
-
-export const getProductDetails = async (productId: number) => {
-    const query = `SELECT * FROM Production.Product WHERE ProductID = @productId`;
-    let pool: sql.ConnectionPool | undefined;
-    try {
-        pool = await sql.connect(sqlConfig);
-        const result = await pool.request()
-            .input('productId', sql.Int, productId)
-            .query(query);
-        return result.recordset;
     } finally {
         if (pool) await pool.close();
     }

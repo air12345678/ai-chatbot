@@ -12,7 +12,7 @@ export interface ChatResponse {
     timestamp: Date;
 }
 
-export interface AdventureWorksData {
+export interface DatabaseQueryData {
     productId: number;
     productName: string;
     category: string;
@@ -21,6 +21,6 @@ export interface AdventureWorksData {
 
 export interface QueryResult {
     success: boolean;
-    data: AdventureWorksData[] | null;
+    data: DatabaseQueryData[] | null;
     error?: string;
 }

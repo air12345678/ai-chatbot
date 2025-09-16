@@ -2,10 +2,10 @@ import { Request, Response } from 'express';
 import AIService from '../services/aiService';
 
 class ChatController {
-    private aiService: AIService;
+    private aiService: typeof AIService;
 
     constructor() {
-        this.aiService = new AIService();
+        this.aiService = AIService;
     }
 
     async handleUserQuery(req: Request, res: Response) {
@@ -68,7 +68,7 @@ class ChatController {
             
             res.json({
                 message: 'Database context initialized successfully',
-                availableTables: 'Ask me about AdventureWorks database tables, products, employees, sales, etc.'
+                availableTables: 'Ask me about your database tables, analytics, business insights, reports, etc.'
             });
         } catch (error: any) {
             res.status(500).json({

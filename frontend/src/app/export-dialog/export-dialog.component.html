@@ -1,0 +1,79 @@
+<div class="export-dialog">
+  <h2 mat-dialog-title>
+    <mat-icon>download</mat-icon>
+    Export Data
+  </h2>
+  
+  <mat-dialog-content>
+    <div class="export-info">
+      <p><strong>Records to export:</strong> {{ data.recordCount | number }}</p>
+      <p><strong>Query:</strong></p>
+      <div class="query-display">{{ data.query }}</div>
+    </div>
+
+    <div class="export-options" *ngIf="!isExporting">
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Filename (without extension)</mat-label>
+        <input matInput [(ngModel)]="filename" placeholder="Enter filename (optional)">
+        <mat-hint>File will be saved as: {{ getPreviewFilename() }}</mat-hint>
+      </mat-form-field>
+
+      <div class="format-selection">
+        <p><strong>Export Format:</strong></p>
+        <mat-radio-group [(ngModel)]="selectedFormat" class="format-group" (change)="onFormatChange()">
+          <mat-radio-button value="excel" class="format-option">
+            <div class="format-details">
+              <div class="format-name">Excel (.xlsx)</div>
+              <div class="format-description">Full formatting, formulas, charts support</div>
+            </div>
+          </mat-radio-button>
+          <mat-radio-button value="csv" class="format-option">
+            <div class="format-details">
+              <div class="format-name">CSV (.csv)</div>
+              <div class="format-description">Lightweight, compatible with all spreadsheet apps</div>
+            </div>
+          </mat-radio-button>
+        </mat-radio-group>
+      </div>
+    </div>
+
+    <div class="export-progress" *ngIf="isExporting">
+      <mat-spinner diameter="40"></mat-spinner>
+      <p>{{ exportStatus }}</p>
+    </div>
+
+    <div class="export-success" *ngIf="exportComplete && !exportError">
+      <mat-icon color="primary">check_circle</mat-icon>
+      <p>Export completed successfully!</p>
+      <p><strong>{{ exportResult?.recordCount | number }}</strong> records exported</p>
+    </div>
+
+    <div class="export-error" *ngIf="exportError">
+      <mat-icon color="warn">error</mat-icon>
+      <p>Export failed: {{ exportError }}</p>
+    </div>
+  </mat-dialog-content>
+
+  <mat-dialog-actions align="end">
+    <button mat-button (click)="cancel()" [disabled]="isExporting">
+      Cancel
+    </button>
+    <button 
+      mat-raised-button 
+      color="primary" 
+      (click)="startExport()" 
+      [disabled]="isExporting || exportComplete"
+      *ngIf="!exportComplete">
+      <mat-icon>download</mat-icon>
+      Export as {{ selectedFormat === 'excel' ? 'Excel' : 'CSV' }}
+    </button>
+    <button 
+      mat-raised-button 
+      color="primary" 
+      (click)="download()" 
+      *ngIf="exportComplete && !exportError">
+      <mat-icon>file_download</mat-icon>
+      Download File
+    </button>
+  </mat-dialog-actions>
+</div>
